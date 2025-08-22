@@ -1,14 +1,22 @@
-import express from 'express'
-const app = express()
+import express from "express";
+import { PORT } from "./config/env.js";
+import userRouter from "./routes/user.routes.js";
+import authRouter from "./routes/auth.routes.js";
+import subscriptionRouter from "./routes/subscription.routes.js";
+import connectDB from "./database/mongodb.js";
 
-import { PORT } from './config/env.js'
+const app = express();
+app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/subscriptions", subscriptionRouter);
 
-app.get('/', (req, res) => {
-    res.send('Testing if port is working')
-})
+app.get("/", (req, res) => {
+  res.send("Testing if port is working");
+});
 
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`)
-})
+app.listen(PORT, async () => {
+  console.log(`Application is running on http://localhost:${PORT}`);
+  await connectDB();
+});
 
-export default app
+export default app;
