@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const subscriptionSchema = new mongoose.Schema(
+const SubscriptionSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -76,7 +76,7 @@ const subscriptionSchema = new mongoose.Schema(
 );
 
 //Auto provide the renewal data
-subscriptionSchema.pre("save", function (next) {
+SubscriptionSchema.pre("save", function (next) {
   if (!this.renewalDate) {
     const renewalPeriods = {
       daily: 1,
@@ -99,5 +99,5 @@ subscriptionSchema.pre("save", function (next) {
   next();
 });
 
-const Subscription = mongoose.model("Subscribtion", subscriptionSchema);
+const Subscription = mongoose.model("Subscription", SubscriptionSchema);
 export default Subscription;
